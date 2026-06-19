@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TOEIC Online — Chấm bài tự động</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>var supabaseLib = window.supabase;</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
@@ -282,7 +283,7 @@ tr:hover td{background:var(--bg-surface)}
 </div>
 
 <script>
-var _supabase = null;
+var sbClient = null;
 var parsedQ = [];
 var currentExam = null;
 var svAnswers = {};
@@ -318,7 +319,7 @@ function init() {
 
 function connectSB(url, key, showMsg) {
   try {
-    _supabase = window.supabase.createClient(url, key);
+    sbClient = supabaseLib.createClient(url, key);
     document.getElementById('conn-dot').className = 'dot on';
     document.getElementById('conn-label').textContent = 'Đã kết nối';
     document.getElementById('config-banner').classList.add('hidden');
@@ -464,13 +465,13 @@ function showParseOK() {
 }
 
 function publishExam() {
-  if(!_supabase) { alert('Chưa kết nối Supabase. Vào Cài đặt trước.'); return; }
+  if(!sbClient) { alert('Chưa kết nối Supabase. Vào Cài đặt trước.'); return; }
   var title = document.getElementById('exam-title').value.trim();
   if(!title) { alert('Vui lòng nhập tên đề thi.'); return; }
   if(!parsedQ.length) { alert('Chưa có câu hỏi.'); return; }
   var btn = event.target;
   btn.disabled = true; btn.textContent = 'Đang xuất bản...';
-  _supabase.from('exams').insert({
+  sbClient.from('exams').insert({
     title: title,
     description: document.getElementById('exam-desc').value.trim(),
     duration_minutes: parseInt(document.getElementById('exam-duration').value) || 120,
@@ -489,8 +490,8 @@ function publishExam() {
 }
 
 function loadExams() {
-  if(!_supabase) return;
-  _supabase.from('exams').select('id,title,description,duration_minutes,pass_score,created_at').order('created_at',{ascending:false}).then(function(res) {
+  if(!sbClient) return;
+  sbClient.from('exams').select('id,title,description,duration_minutes,pass_score,created_at').order('created_at',{ascending:false}).then(function(res) {
     var el = document.getElementById('exams-table');
     if(res.error || !res.data || !res.data.length) { el.innerHTML = '<div class="empty"><p>Chưa có đề thi nào.</p></div>'; return; }
     var html = '<table><thead><tr><th>Tên đề</th><th>Điểm đạt</th><th>Thời gian</th><th>Ngày tạo</th><th></th></tr></thead><tbody>';
@@ -504,14 +505,14 @@ function loadExams() {
 
 function deleteExam(id) {
   if(!confirm('Xóa đề này?')) return;
-  _supabase.from('submissions').delete().eq('exam_id',id).then(function() {
-    _supabase.from('exams').delete().eq('id',id).then(function() { loadExams(); loadExamOptions(); });
+  sbClient.from('submissions').delete().eq('exam_id',id).then(function() {
+    sbClient.from('exams').delete().eq('id',id).then(function() { loadExams(); loadExamOptions(); });
   });
 }
 
 function loadExamOptions() {
-  if(!_supabase) return;
-  _supabase.from('exams').select('id,title').order('created_at',{ascending:false}).then(function(res) {
+  if(!sbClient) return;
+  sbClient.from('exams').select('id,title').order('created_at',{ascending:false}).then(function(res) {
     var sel = document.getElementById('sv-exam-select');
     var fsel = document.getElementById('filter-exam');
     if(!res.data || !res.data.length) { sel.innerHTML = '<option value="">Chưa có đề thi</option>'; return; }
@@ -521,12 +522,12 @@ function loadExamOptions() {
 }
 
 function startExam() {
-  if(!_supabase) { alert('Hệ thống chưa kết nối. Liên hệ giáo viên.'); return; }
+  if(!sbClient) { alert('Hệ thống chưa kết nối. Liên hệ giáo viên.'); return; }
   var name = document.getElementById('sv-name').value.trim();
   var examId = document.getElementById('sv-exam-select').value;
   if(!name) { alert('Vui lòng nhập họ tên.'); return; }
   if(!examId) { alert('Vui lòng chọn đề thi.'); return; }
-  _supabase.from('exams').select('*').eq('id',examId).single().then(function(res) {
+  sbClient.from('exams').select('*').eq('id',examId).single().then(function(res) {
     if(res.error || !res.data) { alert('Không tải được đề thi.'); return; }
     currentExam = res.data;
     activeExamId = examId;
@@ -610,8 +611,8 @@ function confirmSubmit() {
   var rS = rT ? Math.round(rC/rT*495) : 0;
   var tot = lS + rS;
   var passed = tot >= currentExam.pass_score;
-  if(_supabase) {
-    _supabase.from('submissions').insert({
+  if(sbClient) {
+    sbClient.from('submissions').insert({
       exam_id: activeExamId,
       student_name: document.getElementById('sv-name').value.trim(),
       student_email: document.getElementById('sv-email').value.trim(),
@@ -647,9 +648,9 @@ function backToSelect() {
 }
 
 function loadResults() {
-  if(!_supabase) return;
+  if(!sbClient) return;
   var examId = document.getElementById('filter-exam').value;
-  var q = _supabase.from('submissions').select('*,exams(title)').order('submitted_at',{ascending:false});
+  var q = sbClient.from('submissions').select('*,exams(title)').order('submitted_at',{ascending:false});
   if(examId) q = q.eq('exam_id', examId);
   q.then(function(res) {
     allResults = res.data || [];

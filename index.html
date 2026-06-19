@@ -273,7 +273,12 @@ tr:hover td{background:var(--bg-surface)}
   <!-- BƯỚC 2: ĐÁP ÁN -->
   <div class="card">
     <h3>Bước 2 — Nhập đáp án chuẩn</h3>
-    <div class="notice info">Chọn A/B/C/D cho từng câu. Hệ thống dùng để chấm tự động.</div>
+    <div class="notice info">Chọn A/B/C/D cho từng câu — hoặc dùng <strong>AI đọc từ PDF đáp án</strong> để điền tự động.</div>
+    <div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;align-items:center">
+      <button class="btn btn-outline" onclick="aiExtractKey()" id="btn-ai-extract">🤖 AI đọc PDF đáp án → tự điền key</button>
+      <button class="btn btn-outline btn-sm" onclick="clearKey()">✕ Xóa tất cả</button>
+      <span id="ai-extract-status" style="font-size:13px;color:var(--text-muted)"></span>
+    </div>
     <div class="frow">
       <div>
         <span class="slabel" style="margin-top:0">🎧 Listening — Câu 1 đến <span id="lbl-cnt-l">100</span></span>
@@ -819,6 +824,80 @@ function exportCSV(){
 }
 
 function closeModal(id){document.getElementById(id).classList.remove('open');}
+
+async function aiExtractKey() {
+  // Find which PDF to use for key extraction
+  var pdfFile = files['ans-l'] || files['ans-r'] || files['pdf-l'] || files['pdf-r'] || files['pdf-shared'];
+  if(!pdfFile) { alert('Vui lòng upload ít nhất 1 file PDF đáp án trước (Bước 1b).'); return; }
+
+  var btn = document.getElementById('btn-ai-extract');
+  var status = document.getElementById('ai-extract-status');
+  btn.disabled = true; btn.textContent = '⏳ AI đang đọc PDF...';
+  status.textContent = '';
+
+  try {
+    // Convert PDF to base64
+    var base64 = await new Promise(function(res, rej) {
+      var reader = new FileReader();
+      reader.onload = function(e) { res(e.target.result.split(',')[1]); };
+      reader.onerror = rej;
+      reader.readAsDataURL(pdfFile);
+    });
+
+    var cntL = parseInt(document.getElementById('cnt-l').value) || 100;
+    var prompt = 'Đây là file PDF chứa đáp án bài thi TOEIC. Hãy đọc và trích xuất đáp án cho tất cả các câu hỏi.\n\nYêu cầu:\n- Trả về JSON thuần túy, không có markdown, không có giải thích\n- Format: {"1":"A","2":"B","3":"C",...} với key là số câu (1-200), value là chữ cái A/B/C/D\n- Nếu không tìm thấy đáp án cho câu nào thì bỏ qua câu đó\n- Chỉ trả về JSON, không có gì khác';
+
+    var response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 2000,
+        messages: [{
+          role: 'user',
+          content: [
+            { type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: base64 } },
+            { type: 'text', text: prompt }
+          ]
+        }]
+      })
+    });
+
+    var data = await response.json();
+    if(data.error) throw new Error(data.error.message);
+
+    var text = data.content[0].text.trim();
+    // Strip markdown if any
+    text = text.replace(/```json|```/g, '').trim();
+    var extracted = JSON.parse(text);
+
+    var filled = 0;
+    for(var num in extracted) {
+      var val = extracted[num].toUpperCase();
+      if(['A','B','C','D'].indexOf(val) >= 0) {
+        var sel = document.getElementById('ks-' + num);
+        if(sel) { sel.value = val; ansKey[parseInt(num)] = val; sel.className = 'key-sel filled'; filled++; }
+      }
+    }
+
+    btn.disabled = false; btn.textContent = '🤖 AI đọc PDF đáp án → tự điền key';
+    status.textContent = '✅ Đã điền ' + filled + '/200 câu';
+    status.style.color = 'var(--green)';
+
+  } catch(e) {
+    btn.disabled = false; btn.textContent = '🤖 AI đọc PDF đáp án → tự điền key';
+    status.textContent = '❌ Lỗi: ' + e.message;
+    status.style.color = 'var(--red)';
+  }
+}
+
+function clearKey() {
+  ansKey = {};
+  for(var i=1; i<=200; i++) {
+    var s = document.getElementById('ks-'+i);
+    if(s) { s.value = ''; s.className = 'key-sel'; }
+  }
+}
 
 init();
 </script>

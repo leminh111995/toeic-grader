@@ -15,8 +15,7 @@
   --text:#1a1a18;--text-muted:#6b6b67;--text-faint:#9a9a96;
   --bg:#ffffff;--bg-surface:#f7f6f2;
   --border:rgba(0,0,0,0.1);--border-strong:rgba(0,0,0,0.18);
-  --radius:8px;--radius-lg:12px;
-  --shadow:0 1px 3px rgba(0,0,0,0.06);
+  --radius:8px;--radius-lg:12px;--shadow:0 1px 3px rgba(0,0,0,0.06);
 }
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg-surface);color:var(--text);min-height:100vh;font-size:15px;line-height:1.6}
 #config-banner{background:#fff3cd;border-bottom:1px solid #ffc107;padding:10px 20px;font-size:13px;color:#856404;display:flex;align-items:center;gap:10px}
@@ -37,7 +36,7 @@ nav{background:var(--bg);border-bottom:0.5px solid var(--border);padding:0 24px;
 h2{font-size:20px;font-weight:500;margin-bottom:4px}
 h3{font-size:15px;font-weight:500;margin-bottom:12px}
 .subtitle{font-size:13px;color:var(--text-muted);margin-bottom:24px}
-.slabel{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.7px;color:var(--text-faint);margin-bottom:10px;margin-top:20px;display:block}
+.slabel{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.7px;color:var(--text-faint);margin-bottom:8px;margin-top:16px;display:block}
 .card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:20px;margin-bottom:16px;box-shadow:var(--shadow)}
 .card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
 .btn{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:var(--radius);font-size:13px;font-weight:500;cursor:pointer;transition:all 0.15s;border:0.5px solid transparent}
@@ -53,6 +52,7 @@ input:focus,textarea:focus,select:focus{border-color:var(--blue);box-shadow:0 0 
 label{font-size:13px;color:var(--text-muted);display:block;margin-bottom:5px}
 .fg{margin-bottom:14px}
 .frow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.frow3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
 .notice{padding:10px 14px;border-radius:var(--radius);font-size:13px;margin-bottom:14px}
 .notice.info{background:var(--blue-light);color:var(--blue-dark)}
 .notice.success{background:var(--green-light);color:var(--green)}
@@ -67,56 +67,58 @@ td{padding:10px 12px;border-bottom:0.5px solid var(--border);color:var(--text);v
 tr:last-child td{border-bottom:none}
 tr:hover td{background:var(--bg-surface)}
 
-/* UPLOAD ZONE */
-.upload-zone{border:1.5px dashed var(--border-strong);border-radius:var(--radius-lg);padding:24px 20px;text-align:center;cursor:pointer;transition:all 0.2s;background:var(--bg);position:relative}
+/* UPLOAD */
+.upload-zone{border:1.5px dashed var(--border-strong);border-radius:var(--radius-lg);padding:20px;text-align:center;cursor:pointer;transition:all 0.2s;background:var(--bg)}
 .upload-zone:hover,.upload-zone.dragover{border-color:var(--blue);background:var(--blue-light)}
-.upload-zone p{font-size:14px;color:var(--text-muted)}
-.upload-zone small{font-size:12px;color:var(--text-faint)}
-.upload-zone .icon{font-size:28px;margin-bottom:8px}
-.upload-done{border-color:var(--green)!important;background:var(--green-light)!important}
+.upload-zone.done{border-color:var(--green);background:var(--green-light)}
+.upload-zone.disabled{opacity:0.4;pointer-events:none}
+.upload-zone .icon{font-size:24px;margin-bottom:6px}
+.upload-zone p{font-size:13px;color:var(--text-muted)}
+.upload-zone small{font-size:11px;color:var(--text-faint)}
+.file-done{font-size:11px;color:var(--green);margin-top:6px}
 
-/* 2 KHUNG UPLOAD */
-.upload-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+/* TOGGLE SHARED PDF */
+.toggle-row{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding:12px 14px;background:var(--amber-light);border-radius:var(--radius);border:0.5px solid #e8c87a}
+.toggle-row input[type=checkbox]{width:16px;height:16px;cursor:pointer;accent-color:var(--blue)}
+.toggle-row label{font-size:13px;color:var(--amber);margin:0;cursor:pointer}
 
-/* ANSWER KEY INPUT */
-.key-grid{display:grid;grid-template-columns:repeat(10,1fr);gap:4px;margin-bottom:12px}
-.key-cell{display:flex;flex-direction:column;align-items:center;gap:2px}
-.key-num{font-size:10px;color:var(--text-faint)}
-.key-select{width:100%;padding:3px 2px;font-size:12px;border:0.5px solid var(--border-strong);border-radius:4px;text-align:center;background:var(--bg);color:var(--text)}
-.key-select.filled{border-color:var(--blue);background:var(--blue-light)}
+/* KEY GRID */
+.key-grid{display:grid;grid-template-columns:repeat(10,1fr);gap:3px}
+.key-cell{display:flex;flex-direction:column;align-items:center;gap:1px}
+.key-num{font-size:9px;color:var(--text-faint)}
+.key-sel{width:100%;padding:3px 1px;font-size:11px;border:0.5px solid var(--border-strong);border-radius:4px;text-align:center;background:var(--bg);color:var(--text)}
+.key-sel.filled{border-color:var(--blue);background:var(--blue-light)}
 
-/* EXAM PLAYER */
-.exam-layout{display:grid;grid-template-columns:1fr 1fr;gap:0;height:calc(100vh - 120px);border:0.5px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;background:var(--bg)}
-.exam-left{border-right:0.5px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
-.exam-right{display:flex;flex-direction:column;overflow:hidden}
-.panel-header{padding:12px 16px;border-bottom:0.5px solid var(--border);background:var(--bg-surface);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
-.panel-title{font-size:13px;font-weight:600;color:var(--text)}
-.panel-body{flex:1;overflow-y:auto;padding:16px}
-.audio-player{padding:12px 16px;border-top:0.5px solid var(--border);background:var(--bg-surface)}
-audio{width:100%;height:36px}
+/* EXAM LAYOUT */
+.exam-topbar{background:var(--bg);border-bottom:0.5px solid var(--border);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;position:sticky;top:56px;z-index:50}
+.progress-bar{height:4px;background:var(--border);border-radius:2px;overflow:hidden;flex:1;min-width:80px}
+.progress-fill{height:100%;border-radius:2px;background:var(--blue);transition:width 0.3s}
+.exam-layout{display:grid;grid-template-columns:1fr 1fr;gap:0;border:0.5px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;background:var(--bg);height:calc(100vh - 170px);min-height:500px}
+.exam-col{display:flex;flex-direction:column;overflow:hidden}
+.exam-col:first-child{border-right:0.5px solid var(--border)}
+.col-header{padding:10px 16px;border-bottom:0.5px solid var(--border);background:var(--bg-surface);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.col-title{font-size:13px;font-weight:600}
+.col-body{flex:1;overflow-y:auto;padding:14px}
+.col-footer{padding:10px 16px;border-top:0.5px solid var(--border);background:var(--bg-surface);flex-shrink:0}
+.pdf-frame-wrap{height:40%;border-bottom:0.5px solid var(--border);overflow:hidden;flex-shrink:0;background:var(--bg-surface);display:flex;align-items:center;justify-content:center;transition:height 0.2s}
+.pdf-frame-wrap.hidden{height:0;border:none}
 
-/* ANSWER OPTIONS */
-.q-block{margin-bottom:12px;border:0.5px solid var(--border);border-radius:var(--radius);background:var(--bg);overflow:hidden}
-.q-header{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:var(--bg-surface);border-bottom:0.5px solid var(--border)}
-.q-num{min-width:26px;height:26px;border-radius:50%;background:var(--blue);color:#fff;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.q-text{font-size:13px;line-height:1.5;flex:1}
-.q-opts{display:flex;flex-wrap:wrap;gap:5px;padding:10px 14px}
-.q-opt{display:flex;align-items:center;gap:6px;padding:6px 12px;border:0.5px solid var(--border-strong);border-radius:var(--radius);cursor:pointer;font-size:13px;transition:all 0.12s;background:var(--bg);min-width:70px}
+/* ANSWERS */
+.q-block{margin-bottom:10px;border:0.5px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.q-header{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--bg-surface);border-bottom:0.5px solid var(--border)}
+.q-num{min-width:24px;height:24px;border-radius:50%;background:var(--blue);color:#fff;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.q-opts{display:flex;gap:5px;padding:8px 12px;flex-wrap:wrap}
+.q-opt{display:flex;align-items:center;gap:5px;padding:5px 12px;border:0.5px solid var(--border-strong);border-radius:var(--radius);cursor:pointer;font-size:13px;transition:all 0.1s;background:var(--bg)}
 .q-opt:hover{border-color:var(--blue);background:var(--blue-light)}
 .q-opt.selected{border-color:var(--blue);background:var(--blue-light);color:var(--blue-dark);font-weight:500}
 .q-opt.correct{border-color:var(--green);background:var(--green-light);color:var(--green)}
 .q-opt.wrong{border-color:var(--red);background:var(--red-light);color:var(--red)}
-.opt-dot{width:18px;height:18px;border-radius:50%;border:1.5px solid currentColor;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
-
-/* TOP BAR EXAM */
-.exam-topbar{background:var(--bg);border-bottom:0.5px solid var(--border);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.progress-bar{height:4px;background:var(--border);border-radius:2px;overflow:hidden;flex:1;min-width:100px}
-.progress-fill{height:100%;border-radius:2px;background:var(--blue);transition:width 0.3s}
+.opt-dot{width:17px;height:17px;border-radius:50%;border:1.5px solid currentColor;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
 
 /* SCORE */
 .score-panel{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
 .score-box{background:var(--bg-surface);border-radius:var(--radius-lg);padding:16px;text-align:center;border:0.5px solid var(--border)}
-.score-box .val{font-size:32px;font-weight:500;line-height:1.1}
+.score-box .val{font-size:30px;font-weight:500}
 .score-box .lbl{font-size:12px;color:var(--text-muted);margin-top:4px}
 .val.blue{color:var(--blue)}.val.green{color:var(--green)}
 
@@ -124,18 +126,15 @@ audio{width:100%;height:36px}
 .modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:200;align-items:center;justify-content:center}
 .modal-bg.open{display:flex}
 .modal{background:var(--bg);border-radius:16px;padding:28px;max-width:520px;width:calc(100% - 40px);box-shadow:0 20px 60px rgba(0,0,0,0.2)}
-.modal h3{margin-bottom:16px}
 .modal-footer{display:flex;justify-content:flex-end;gap:10px;margin-top:20px}
-
-.empty{text-align:center;padding:48px 20px;color:var(--text-muted)}
+.empty{text-align:center;padding:40px 20px;color:var(--text-muted)}
 .step-row{display:flex;gap:12px;align-items:flex-start;margin-bottom:20px}
 .step-num{min-width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
 
 @media(max-width:700px){
-  .upload-grid{grid-template-columns:1fr}
+  .frow,.frow3{grid-template-columns:1fr}
   .exam-layout{grid-template-columns:1fr;height:auto}
-  .exam-left{border-right:none;border-bottom:0.5px solid var(--border);height:50vh}
-  .frow{grid-template-columns:1fr}
+  .exam-col:first-child{border-right:none;border-bottom:0.5px solid var(--border);min-height:400px}
   .score-panel{grid-template-columns:1fr 1fr}
   .key-grid{grid-template-columns:repeat(5,1fr)}
 }
@@ -167,66 +166,103 @@ audio{width:100%;height:36px}
 <!-- ===== GIÁO VIÊN ===== -->
 <div class="page active" id="page-teacher">
   <h2>Tạo đề thi</h2>
-  <p class="subtitle">Upload file riêng cho Listening và Reading, nhập đáp án chuẩn.</p>
+  <p class="subtitle">Upload file và nhập đáp án chuẩn cho từng phần.</p>
 
+  <!-- BƯỚC 1: UPLOAD -->
   <div class="card">
-    <h3>Bước 1 — Upload file đề</h3>
-    <div class="upload-grid">
-      <!-- LISTENING -->
-      <div>
-        <span class="slabel" style="margin-top:0">🎧 Listening</span>
-        <div class="upload-zone" id="zone-mp3" onclick="document.getElementById('input-mp3').click()" ondragover="drag(event,'zone-mp3',true)" ondragleave="drag(event,'zone-mp3',false)" ondrop="drop(event,'mp3')">
-          <div class="icon">🎵</div>
-          <p>Upload file <strong>MP3</strong></p>
-          <small>Audio cho học viên nghe</small>
-          <div id="mp3-name" style="margin-top:8px;font-size:12px;color:var(--green);display:none"></div>
-        </div>
-        <input type="file" id="input-mp3" accept=".mp3,.m4a,.wav,.ogg" style="display:none" onchange="handleFile(event,'mp3')">
+    <h3>Bước 1 — Upload file</h3>
+
+    <div class="toggle-row">
+      <input type="checkbox" id="chk-shared-pdf" onchange="toggleSharedPDF()">
+      <label for="chk-shared-pdf">📎 Dùng <strong>1 PDF chung</strong> cho cả Listening và Reading (không cần upload 2 PDF riêng)</label>
+    </div>
+
+    <div id="upload-shared" style="display:none">
+      <span class="slabel" style="margin-top:0">📋 PDF chung (Listening + Reading)</span>
+      <div class="upload-zone" id="zone-pdf-shared" onclick="document.getElementById('input-pdf-shared').click()" ondragover="drag(event,'zone-pdf-shared',true)" ondragleave="drag(event,'zone-pdf-shared',false)" ondrop="dropFile(event,'pdf-shared')">
+        <div class="icon">📄</div>
+        <p><strong>PDF chung</strong> — dùng cho cả 2 phần</p>
+        <small>.pdf · tối đa 20MB</small>
+        <div class="file-done" id="pdf-shared-name" style="display:none"></div>
       </div>
-      <!-- READING -->
-      <div>
-        <span class="slabel" style="margin-top:0">📄 Reading</span>
-        <div class="upload-zone" id="zone-pdf" onclick="document.getElementById('input-pdf').click()" ondragover="drag(event,'zone-pdf',true)" ondragleave="drag(event,'zone-pdf',false)" ondrop="drop(event,'pdf')">
-          <div class="icon">📋</div>
-          <p>Upload file <strong>PDF</strong></p>
-          <small>Đề thi để học viên đọc</small>
-          <div id="pdf-name" style="margin-top:8px;font-size:12px;color:var(--green);display:none"></div>
+      <input type="file" id="input-pdf-shared" accept=".pdf" style="display:none" onchange="handleFile(event,'pdf-shared')">
+    </div>
+
+    <div id="upload-separate">
+      <div class="frow3">
+        <!-- MP3 -->
+        <div>
+          <span class="slabel" style="margin-top:0">🎵 Audio Listening (MP3)</span>
+          <div class="upload-zone" id="zone-mp3" onclick="document.getElementById('input-mp3').click()" ondragover="drag(event,'zone-mp3',true)" ondragleave="drag(event,'zone-mp3',false)" ondrop="dropFile(event,'mp3')">
+            <div class="icon">🎧</div>
+            <p><strong>File MP3</strong></p>
+            <small>.mp3 / .m4a · tối đa 100MB</small>
+            <div class="file-done" id="mp3-name" style="display:none"></div>
+          </div>
+          <input type="file" id="input-mp3" accept=".mp3,.m4a,.wav,.ogg" style="display:none" onchange="handleFile(event,'mp3')">
         </div>
-        <input type="file" id="input-pdf" accept=".pdf" style="display:none" onchange="handleFile(event,'pdf')">
+        <!-- PDF Listening -->
+        <div>
+          <span class="slabel" style="margin-top:0">📋 PDF đề Listening</span>
+          <div class="upload-zone" id="zone-pdf-l" onclick="document.getElementById('input-pdf-l').click()" ondragover="drag(event,'zone-pdf-l',true)" ondragleave="drag(event,'zone-pdf-l',false)" ondrop="dropFile(event,'pdf-l')">
+            <div class="icon">📄</div>
+            <p><strong>PDF Listening</strong></p>
+            <small>.pdf · tối đa 20MB</small>
+            <div class="file-done" id="pdf-l-name" style="display:none"></div>
+          </div>
+          <input type="file" id="input-pdf-l" accept=".pdf" style="display:none" onchange="handleFile(event,'pdf-l')">
+        </div>
+        <!-- PDF Reading -->
+        <div>
+          <span class="slabel" style="margin-top:0">📋 PDF đề Reading</span>
+          <div class="upload-zone" id="zone-pdf-r" onclick="document.getElementById('input-pdf-r').click()" ondragover="drag(event,'zone-pdf-r',true)" ondragleave="drag(event,'zone-pdf-r',false)" ondrop="dropFile(event,'pdf-r')">
+            <div class="icon">📄</div>
+            <p><strong>PDF Reading</strong></p>
+            <small>.pdf · tối đa 20MB</small>
+            <div class="file-done" id="pdf-r-name" style="display:none"></div>
+          </div>
+          <input type="file" id="input-pdf-r" accept=".pdf" style="display:none" onchange="handleFile(event,'pdf-r')">
+        </div>
       </div>
     </div>
   </div>
 
+  <!-- BƯỚC 2: ĐÁP ÁN -->
   <div class="card">
     <h3>Bước 2 — Nhập đáp án chuẩn</h3>
-    <div class="notice info">Nhập đáp án A/B/C/D cho từng câu. Hệ thống dùng để chấm tự động.</div>
-    <div class="upload-grid">
+    <div class="notice info">Chọn A/B/C/D cho từng câu. Hệ thống dùng để chấm tự động.</div>
+    <div class="frow">
       <div>
-        <span class="slabel" style="margin-top:0">🎧 Listening — Câu 1–100</span>
+        <span class="slabel" style="margin-top:0">🎧 Listening — Câu 1 đến <span id="lbl-cnt-l">100</span></span>
         <div class="key-grid" id="key-listening"></div>
       </div>
       <div>
-        <span class="slabel" style="margin-top:0">📄 Reading — Câu 101–200</span>
+        <span class="slabel" style="margin-top:0">📄 Reading — Câu <span id="lbl-cnt-l2">101</span> đến 200</span>
         <div class="key-grid" id="key-reading"></div>
       </div>
     </div>
   </div>
 
+  <!-- BƯỚC 3: THÔNG TIN -->
   <div class="card">
     <h3>Bước 3 — Thông tin đề thi</h3>
     <div class="frow">
       <div class="fg"><label>Tên đề thi *</label><input type="text" id="exam-title" placeholder="VD: TOEIC tháng 6/2025"></div>
-      <div class="fg"><label>Mô tả</label><input type="text" id="exam-desc" placeholder="VD: Đề thực hành đầy đủ 4 kỹ năng"></div>
+      <div class="fg"><label>Mô tả</label><input type="text" id="exam-desc" placeholder="Mô tả ngắn (không bắt buộc)"></div>
     </div>
-    <div class="frow">
+    <div class="frow3">
+      <div class="fg">
+        <label>Số câu Listening</label>
+        <input type="number" id="cnt-l" value="100" min="1" max="200" onchange="updateKeyGrids()">
+      </div>
       <div class="fg"><label>Thời gian Listening (phút)</label><input type="number" id="dur-l" value="45" min="1"></div>
       <div class="fg"><label>Thời gian Reading (phút)</label><input type="number" id="dur-r" value="75" min="1"></div>
     </div>
     <div class="frow">
-      <div class="fg"><label>Số câu Listening</label><input type="number" id="cnt-l" value="100" min="1" max="100"></div>
-      <div class="fg"><label>Điểm đạt (tổng, tối đa 990)</label><input type="number" id="exam-pass" value="450" min="10" max="990"></div>
+      <div class="fg"><label>Điểm đạt (tối đa 990)</label><input type="number" id="exam-pass" value="450" min="10" max="990"></div>
+      <div></div>
     </div>
-    <div style="display:flex;gap:10px;margin-top:4px;flex-wrap:wrap">
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
       <button class="btn btn-primary" onclick="publishExam()">🚀 Xuất bản đề</button>
     </div>
     <div id="publish-result" style="margin-top:12px"></div>
@@ -234,7 +270,7 @@ audio{width:100%;height:36px}
 
   <div class="card">
     <div class="card-header">
-      <h3 style="margin:0">Đề thi đã xuất bản</h3>
+      <h3 style="margin:0">Đề đã xuất bản</h3>
       <button class="btn btn-outline btn-sm" onclick="loadExams()">↻ Làm mới</button>
     </div>
     <div id="exams-table"><div class="empty"><p>Chưa có đề thi nào.</p></div></div>
@@ -258,55 +294,64 @@ audio{width:100%;height:36px}
   </div>
 
   <div id="sv-doing" style="display:none">
+    <!-- TOP BAR -->
     <div class="exam-topbar">
-      <div>
-        <strong id="doing-title" style="font-size:14px">—</strong>
-        <span style="font-size:12px;color:var(--text-muted);margin-left:10px" id="doing-sname"></span>
+      <div style="min-width:0">
+        <strong id="doing-title" style="font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block">—</strong>
+        <span id="doing-sname" style="font-size:12px;color:var(--text-muted)"></span>
       </div>
       <div style="display:flex;align-items:center;gap:10px;flex:1;margin:0 16px">
         <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
         <span id="progress-info" style="font-size:12px;color:var(--text-muted);white-space:nowrap">0/200</span>
       </div>
       <div style="display:flex;align-items:center;gap:10px">
-        <div id="timer-box" style="font-size:18px;font-weight:500;color:var(--blue);font-variant-numeric:tabular-nums">—</div>
+        <div id="timer-box" style="font-size:18px;font-weight:500;color:var(--blue);font-variant-numeric:tabular-nums;min-width:60px">—</div>
         <button class="btn btn-primary btn-sm" onclick="submitExam()">Nộp bài ✓</button>
       </div>
     </div>
 
-    <!-- 2 KHUNG -->
-    <div class="exam-layout" style="margin-top:12px">
-      <!-- TRÁI: Listening -->
-      <div class="exam-left">
-        <div class="panel-header">
-          <span class="panel-title">🎧 Listening — <span id="l-count">100</span> câu</span>
-          <span id="l-timer" style="font-size:12px;color:var(--text-muted)"></span>
+    <!-- 2 CỘT -->
+    <div class="exam-layout" style="margin-top:0">
+      <!-- CỘT TRÁI: LISTENING -->
+      <div class="exam-col">
+        <div class="col-header">
+          <span class="col-title">🎧 Listening</span>
+          <span id="l-prog" style="font-size:12px;color:var(--text-muted)">0/<span id="l-total">100</span></span>
         </div>
-        <div class="panel-body" id="panel-listening"></div>
-        <div class="audio-player">
-          <div style="font-size:12px;color:var(--text-muted);margin-bottom:6px">🔊 Audio bài thi — nghe và chọn đáp án</div>
-          <audio id="audio-player" controls controlsList="nodownload">
+        <!-- PDF Listening (nếu có) -->
+        <div class="pdf-frame-wrap" id="pdf-l-wrap">
+          <div style="text-align:center;color:var(--text-faint);font-size:13px;padding:16px" id="pdf-l-placeholder">📋 PDF đề Listening</div>
+          <iframe id="pdf-l-frame" style="width:100%;height:100%;border:none;display:none"></iframe>
+        </div>
+        <div class="col-body" id="panel-listening"></div>
+        <div class="col-footer">
+          <div style="font-size:11px;color:var(--text-muted);margin-bottom:6px">🔊 Audio — nghe và chọn đáp án bên trên</div>
+          <audio id="audio-player" controls style="width:100%;height:32px" controlsList="nodownload">
             <source id="audio-src" src="" type="audio/mpeg">
           </audio>
         </div>
       </div>
-      <!-- PHẢI: Reading -->
-      <div class="exam-right">
-        <div class="panel-header">
-          <span class="panel-title">📄 Reading — <span id="r-count">100</span> câu</span>
-          <div style="display:flex;gap:6px">
-            <button class="btn btn-outline btn-sm" onclick="togglePDF()">📋 Xem/ẩn đề</button>
+
+      <!-- CỘT PHẢI: READING -->
+      <div class="exam-col">
+        <div class="col-header">
+          <span class="col-title">📄 Reading</span>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span id="r-prog" style="font-size:12px;color:var(--text-muted)">0/<span id="r-total">100</span></span>
+            <button class="btn btn-outline btn-sm" onclick="togglePDF('r')" id="btn-toggle-pdf-r">Ẩn đề</button>
           </div>
         </div>
-        <div id="pdf-viewer" style="flex:0 0 40%;border-bottom:0.5px solid var(--border);overflow:hidden;display:flex;align-items:center;justify-content:center;background:var(--bg-surface)">
-          <div style="text-align:center;color:var(--text-faint);font-size:13px;padding:20px" id="pdf-placeholder">📋 File PDF đề thi sẽ hiển thị ở đây</div>
-          <iframe id="pdf-frame" style="width:100%;height:100%;border:none;display:none"></iframe>
+        <!-- PDF Reading -->
+        <div class="pdf-frame-wrap" id="pdf-r-wrap">
+          <div style="text-align:center;color:var(--text-faint);font-size:13px;padding:16px" id="pdf-r-placeholder">📋 PDF đề Reading</div>
+          <iframe id="pdf-r-frame" style="width:100%;height:100%;border:none;display:none"></iframe>
         </div>
-        <div class="panel-body" id="panel-reading"></div>
+        <div class="col-body" id="panel-reading"></div>
       </div>
     </div>
   </div>
 
-  <div id="sv-result" style="display:none">
+  <div id="sv-result" style="display:none;max-width:960px;margin:0 auto;padding:24px 20px">
     <h2>Kết quả bài thi</h2>
     <p class="subtitle" id="result-sub">—</p>
     <div class="score-panel" id="score-panel"></div>
@@ -321,7 +366,7 @@ audio{width:100%;height:36px}
 <!-- ===== KẾT QUẢ ===== -->
 <div class="page" id="page-results">
   <h2>Kết quả học viên</h2>
-  <p class="subtitle">Tổng hợp bài thi của tất cả học viên.</p>
+  <p class="subtitle">Tổng hợp bài thi.</p>
   <div class="card">
     <div class="card-header">
       <div style="display:flex;gap:8px;flex-wrap:wrap">
@@ -330,26 +375,25 @@ audio{width:100%;height:36px}
       </div>
       <button class="btn btn-outline btn-sm" onclick="exportCSV()">⬇ Xuất CSV</button>
     </div>
-    <div id="results-table"><div class="empty"><p>Chưa có kết quả nào.</p></div></div>
+    <div id="results-table"><div class="empty"><p>Chưa có kết quả.</p></div></div>
   </div>
 </div>
 
 <!-- ===== CÀI ĐẶT ===== -->
 <div class="page" id="page-config">
   <h2>Cài đặt kết nối</h2>
-  <p class="subtitle">Kết nối Supabase để lưu đề thi, file và kết quả.</p>
+  <p class="subtitle">Kết nối Supabase để lưu đề thi, file MP3/PDF và kết quả.</p>
   <div style="max-width:560px;margin:0 auto">
     <div class="card">
       <div class="step-row">
         <div class="step-num">1</div>
-        <div><strong>Tạo project Supabase miễn phí</strong><br><span style="font-size:13px;color:var(--text-muted)">Vào <a href="https://supabase.com" target="_blank" style="color:var(--blue)">supabase.com</a> → New project → Settings → API Keys lấy URL và anon key.</span></div>
+        <div><strong>Tạo project Supabase miễn phí</strong><br><span style="font-size:13px;color:var(--text-muted)">Vào <a href="https://supabase.com" target="_blank" style="color:var(--blue)">supabase.com</a> → New project → Settings → API Keys.</span></div>
       </div>
       <div class="step-row">
         <div class="step-num">2</div>
         <div style="flex:1">
-          <strong>Tạo bảng + Storage</strong><br>
-          <span style="font-size:13px;color:var(--text-muted)">SQL Editor → New query → paste → Run:</span>
-          <div style="background:var(--bg-surface);border:0.5px solid var(--border);border-radius:var(--radius);padding:12px;font-family:monospace;font-size:11px;line-height:1.6;overflow-x:auto;white-space:pre;margin-top:8px" id="sql-block"></div>
+          <strong>Chạy SQL tạo bảng + Storage</strong>
+          <div style="background:var(--bg-surface);border:0.5px solid var(--border);border-radius:var(--radius);padding:10px;font-family:monospace;font-size:10px;line-height:1.6;overflow-x:auto;white-space:pre;margin-top:8px" id="sql-block"></div>
           <button class="btn btn-outline btn-sm" style="margin-top:8px" onclick="copySQL()">📋 Copy SQL</button>
         </div>
       </div>
@@ -364,11 +408,11 @@ audio{width:100%;height:36px}
         </div>
       </div>
     </div>
-    <div class="notice info">💡 Thông tin lưu trong trình duyệt (localStorage) — không gửi đi đâu khác.</div>
+    <div class="notice info">💡 Thông tin lưu trong trình duyệt — không gửi đi đâu khác.</div>
   </div>
 </div>
 
-<!-- MODAL XÁC NHẬN NỘP -->
+<!-- MODAL -->
 <div class="modal-bg" id="modal-confirm">
   <div class="modal">
     <h3>Xác nhận nộp bài?</h3>
@@ -381,57 +425,22 @@ audio{width:100%;height:36px}
 </div>
 
 <script>
-var sbLib = null;
-var sbClient = null;
-var uploadedFiles = {mp3: null, pdf: null};
-var answerKey = {};
-var currentExam = null;
-var svAnswers = {};
-var timerInt = null;
-var timeLeft = 0;
-var allResults = [];
-var activeExamId = null;
-var pdfVisible = true;
+var sbLib = null, sbClient = null;
+var files = {mp3:null,'pdf-l':null,'pdf-r':null,'pdf-shared':null};
+var ansKey = {};
+var currentExam = null, svAnswers = {}, timerInt = null, timeLeft = 0;
+var allResults = [], activeExamId = null;
+var pdfRVisible = true, pdfLVisible = true;
+var isSharedPDF = false;
 
-var SQL_TEXT = "-- Chạy trong Supabase SQL Editor\ncreate table if not exists exams (\n  id uuid primary key default gen_random_uuid(),\n  title text not null,\n  description text,\n  duration_l int default 45,\n  duration_r int default 75,\n  count_l int default 100,\n  pass_score int default 450,\n  answer_key jsonb,\n  mp3_url text,\n  pdf_url text,\n  created_at timestamptz default now()\n);\n\ncreate table if not exists submissions (\n  id uuid primary key default gen_random_uuid(),\n  exam_id uuid references exams(id),\n  student_name text,\n  student_email text,\n  student_code text,\n  answers jsonb,\n  score_listening int,\n  score_reading int,\n  score_total int,\n  passed boolean,\n  submitted_at timestamptz default now()\n);\n\nalter table exams enable row level security;\nalter table submissions enable row level security;\ncreate policy \"read exams\" on exams for select using (true);\ncreate policy \"insert exams\" on exams for insert with check (true);\ncreate policy \"read submissions\" on submissions for select using (true);\ncreate policy \"insert submissions\" on submissions for insert with check (true);\n\n-- Storage bucket cho file MP3 và PDF\ninsert into storage.buckets (id, name, public) values ('toeic-files', 'toeic-files', true) on conflict do nothing;\ncreate policy \"public read files\" on storage.objects for select using (bucket_id = 'toeic-files');\ncreate policy \"public upload files\" on storage.objects for insert with check (bucket_id = 'toeic-files');";
+var SQL = "create table if not exists exams (\n  id uuid primary key default gen_random_uuid(),\n  title text not null,\n  description text,\n  duration_l int default 45,\n  duration_r int default 75,\n  count_l int default 100,\n  pass_score int default 450,\n  answer_key jsonb,\n  mp3_url text,\n  pdf_l_url text,\n  pdf_r_url text,\n  created_at timestamptz default now()\n);\n\ncreate table if not exists submissions (\n  id uuid primary key default gen_random_uuid(),\n  exam_id uuid references exams(id),\n  student_name text,\n  student_email text,\n  student_code text,\n  answers jsonb,\n  score_listening int,\n  score_reading int,\n  score_total int,\n  passed boolean,\n  submitted_at timestamptz default now()\n);\n\nalter table exams enable row level security;\nalter table submissions enable row level security;\ncreate policy \"r exams\" on exams for select using (true);\ncreate policy \"i exams\" on exams for insert with check (true);\ncreate policy \"r subs\" on submissions for select using (true);\ncreate policy \"i subs\" on submissions for insert with check (true);\n\ninsert into storage.buckets (id,name,public) values ('toeic-files','toeic-files',true) on conflict do nothing;\ncreate policy \"r files\" on storage.objects for select using (bucket_id='toeic-files');\ncreate policy \"i files\" on storage.objects for insert with check (bucket_id='toeic-files');";
 
-document.getElementById('sql-block').textContent = SQL_TEXT;
-
-// Build answer key grids
-function buildKeyGrids() {
-  var lGrid = document.getElementById('key-listening');
-  var rGrid = document.getElementById('key-reading');
-  lGrid.innerHTML = ''; rGrid.innerHTML = '';
-  for (var i = 1; i <= 100; i++) {
-    lGrid.innerHTML += '<div class="key-cell"><div class="key-num">' + i + '</div><select class="key-select" id="key-' + i + '" onchange="keyChanged(' + i + ')"><option value="">-</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>';
-  }
-  for (var j = 101; j <= 200; j++) {
-    rGrid.innerHTML += '<div class="key-cell"><div class="key-num">' + j + '</div><select class="key-select" id="key-' + j + '" onchange="keyChanged(' + j + ')"><option value="">-</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>';
-  }
-}
-
-function keyChanged(n) {
-  var sel = document.getElementById('key-' + n);
-  answerKey[n] = sel.value;
-  sel.className = 'key-select' + (sel.value ? ' filled' : '');
-}
-
-function showPage(name) {
-  document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
-  document.querySelectorAll('.nav-tab').forEach(function(t){ t.classList.remove('active'); });
-  var pg = document.getElementById('page-' + name);
-  var tb = document.getElementById('tab-' + name);
-  if(pg) pg.classList.add('active');
-  if(tb) tb.classList.add('active');
-  if(name === 'results') loadResults();
-  if(name === 'student') loadExamOptions();
-}
+document.getElementById('sql-block').textContent = SQL;
 
 function init() {
   sbLib = window.supabase;
-  buildKeyGrids();
-  var url = localStorage.getItem('sb_url');
-  var key = localStorage.getItem('sb_key');
+  buildKeyGrids(100);
+  var url = localStorage.getItem('sb_url'), key = localStorage.getItem('sb_key');
   if(url && key) {
     document.getElementById('cfg-url').value = url;
     document.getElementById('cfg-key').value = key;
@@ -439,319 +448,323 @@ function init() {
   }
 }
 
-function connectSB(url, key, showMsg) {
+function buildKeyGrids(cntL) {
+  var cntR = 200 - cntL;
+  document.getElementById('lbl-cnt-l').textContent = cntL;
+  document.getElementById('lbl-cnt-l2').textContent = cntL + 1;
+  var lg = document.getElementById('key-listening'), rg = document.getElementById('key-reading');
+  lg.innerHTML = ''; rg.innerHTML = '';
+  for(var i=1; i<=cntL; i++) lg.innerHTML += keyCell(i);
+  for(var j=cntL+1; j<=200; j++) rg.innerHTML += keyCell(j);
+}
+
+function keyCell(n) {
+  return '<div class="key-cell"><div class="key-num">'+n+'</div><select class="key-sel" id="ks-'+n+'" onchange="kc('+n+')"><option value="">-</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>';
+}
+
+function kc(n) {
+  var s = document.getElementById('ks-'+n);
+  ansKey[n] = s.value;
+  s.className = 'key-sel' + (s.value ? ' filled' : '');
+}
+
+function updateKeyGrids() {
+  var v = parseInt(document.getElementById('cnt-l').value) || 100;
+  buildKeyGrids(v);
+}
+
+function toggleSharedPDF() {
+  isSharedPDF = document.getElementById('chk-shared-pdf').checked;
+  document.getElementById('upload-shared').style.display = isSharedPDF ? 'block' : 'none';
+  document.getElementById('upload-separate').style.display = isSharedPDF ? 'none' : 'block';
+  // disable pdf-l and pdf-r zones when shared
+  var zl = document.getElementById('zone-pdf-l'), zr = document.getElementById('zone-pdf-r');
+  if(zl) zl.classList.toggle('disabled', isSharedPDF);
+  if(zr) zr.classList.toggle('disabled', isSharedPDF);
+}
+
+function showPage(n) {
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
+  document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active')});
+  var pg = document.getElementById('page-'+n), tb = document.getElementById('tab-'+n);
+  if(pg) pg.classList.add('active');
+  if(tb) tb.classList.add('active');
+  if(n==='results') loadResults();
+  if(n==='student') loadExamOptions();
+}
+
+function connectSB(url, key, show) {
   try {
     sbClient = sbLib.createClient(url, key);
     document.getElementById('conn-dot').className = 'dot on';
     document.getElementById('conn-label').textContent = 'Đã kết nối';
     document.getElementById('config-banner').classList.add('hidden');
-    if(showMsg) document.getElementById('cfg-result').innerHTML = '<div class="notice success">✅ Kết nối thành công!</div>';
+    if(show) document.getElementById('cfg-result').innerHTML = '<div class="notice success">✅ Kết nối thành công!</div>';
     loadExams(); loadExamOptions();
   } catch(e) {
-    if(showMsg) document.getElementById('cfg-result').innerHTML = '<div class="notice error">❌ Lỗi: ' + e.message + '</div>';
+    if(show) document.getElementById('cfg-result').innerHTML = '<div class="notice error">❌ ' + e.message + '</div>';
   }
 }
 
 function saveConfig() {
-  var url = document.getElementById('cfg-url').value.trim();
-  var key = document.getElementById('cfg-key').value.trim();
-  if(!url || !key) { alert('Vui lòng nhập đủ URL và Key.'); return; }
-  localStorage.setItem('sb_url', url); localStorage.setItem('sb_key', key);
-  connectSB(url, key, true);
+  var url = document.getElementById('cfg-url').value.trim(), key = document.getElementById('cfg-key').value.trim();
+  if(!url||!key){alert('Nhập đủ URL và Key.');return;}
+  localStorage.setItem('sb_url',url); localStorage.setItem('sb_key',key);
+  connectSB(url,key,true);
 }
 
-function copySQL() { navigator.clipboard.writeText(SQL_TEXT).then(function(){ alert('Đã copy SQL!'); }); }
+function copySQL(){ navigator.clipboard.writeText(SQL).then(function(){alert('Đã copy SQL!');}); }
 
-// File handling
-function drag(e, zoneId, over) { e.preventDefault(); document.getElementById(zoneId).classList.toggle('dragover', over); }
-function drop(e, type) {
-  e.preventDefault();
-  var zoneId = type === 'mp3' ? 'zone-mp3' : 'zone-pdf';
-  document.getElementById(zoneId).classList.remove('dragover');
-  if(e.dataTransfer.files[0]) setFile(e.dataTransfer.files[0], type);
-}
-function handleFile(e, type) { if(e.target.files[0]) setFile(e.target.files[0], type); }
+function drag(e,id,on){ e.preventDefault(); document.getElementById(id).classList.toggle('dragover',on); }
+function dropFile(e,type){ e.preventDefault(); var id='zone-'+type; document.getElementById(id).classList.remove('dragover'); if(e.dataTransfer.files[0]) setFile(e.dataTransfer.files[0],type); }
+function handleFile(e,type){ if(e.target.files[0]) setFile(e.target.files[0],type); }
 
-function setFile(file, type) {
-  uploadedFiles[type] = file;
-  var nameEl = document.getElementById(type + '-name');
-  var zone = document.getElementById('zone-' + type);
-  nameEl.textContent = '✅ ' + file.name + ' (' + (file.size/1024/1024).toFixed(1) + 'MB)';
-  nameEl.style.display = 'block';
-  zone.classList.add('upload-done');
+function setFile(f,type){
+  files[type]=f;
+  var nm = document.getElementById(type+'-name');
+  var zn = document.getElementById('zone-'+type);
+  if(nm){ nm.textContent='✅ '+f.name+' ('+(f.size/1024/1024).toFixed(1)+'MB)'; nm.style.display='block'; }
+  if(zn) zn.classList.add('done');
 }
 
-async function uploadFile(file, path) {
-  var res = await sbClient.storage.from('toeic-files').upload(path, file, {upsert: true});
-  if(res.error) throw new Error(res.error.message);
-  var pub = sbClient.storage.from('toeic-files').getPublicUrl(path);
-  return pub.data.publicUrl;
+async function uploadFile(f, path) {
+  var r = await sbClient.storage.from('toeic-files').upload(path, f, {upsert:true});
+  if(r.error) throw new Error(r.error.message);
+  return sbClient.storage.from('toeic-files').getPublicUrl(path).data.publicUrl;
 }
 
 async function publishExam() {
-  if(!sbClient) { alert('Chưa kết nối Supabase. Vào Cài đặt trước.'); return; }
+  if(!sbClient){alert('Chưa kết nối Supabase.');return;}
   var title = document.getElementById('exam-title').value.trim();
-  if(!title) { alert('Vui lòng nhập tên đề thi.'); return; }
-
-  var btn = event.target;
-  btn.disabled = true; btn.textContent = '⏳ Đang xử lý...';
+  if(!title){alert('Nhập tên đề thi.');return;}
+  var btn = event.target; btn.disabled=true; btn.textContent='⏳ Đang xử lý...';
   var res = document.getElementById('publish-result');
-  res.innerHTML = '<div class="notice info">⏳ Đang upload file... có thể mất 1-2 phút.</div>';
-
   try {
-    var mp3Url = '', pdfUrl = '';
-    var ts = Date.now();
-    if(uploadedFiles.mp3) {
-      res.innerHTML = '<div class="notice info">⏳ Đang upload MP3...</div>';
-      mp3Url = await uploadFile(uploadedFiles.mp3, 'mp3/' + ts + '-' + uploadedFiles.mp3.name);
+    var ts = Date.now(), mp3='', pdfL='', pdfR='';
+    if(files.mp3){ res.innerHTML='<div class="notice info">⏳ Upload MP3...</div>'; mp3 = await uploadFile(files.mp3,'mp3/'+ts+'-'+files.mp3.name); }
+    if(isSharedPDF && files['pdf-shared']){
+      res.innerHTML='<div class="notice info">⏳ Upload PDF chung...</div>';
+      var shared = await uploadFile(files['pdf-shared'],'pdf/'+ts+'-'+files['pdf-shared'].name);
+      pdfL = shared; pdfR = shared;
+    } else {
+      if(files['pdf-l']){ res.innerHTML='<div class="notice info">⏳ Upload PDF Listening...</div>'; pdfL = await uploadFile(files['pdf-l'],'pdf/'+ts+'-l-'+files['pdf-l'].name); }
+      if(files['pdf-r']){ res.innerHTML='<div class="notice info">⏳ Upload PDF Reading...</div>'; pdfR = await uploadFile(files['pdf-r'],'pdf/'+ts+'-r-'+files['pdf-r'].name); }
     }
-    if(uploadedFiles.pdf) {
-      res.innerHTML = '<div class="notice info">⏳ Đang upload PDF...</div>';
-      pdfUrl = await uploadFile(uploadedFiles.pdf, 'pdf/' + ts + '-' + uploadedFiles.pdf.name);
-    }
-
-    var dbRes = await sbClient.from('exams').insert({
-      title: title,
-      description: document.getElementById('exam-desc').value.trim(),
-      duration_l: parseInt(document.getElementById('dur-l').value) || 45,
-      duration_r: parseInt(document.getElementById('dur-r').value) || 75,
-      count_l: parseInt(document.getElementById('cnt-l').value) || 100,
-      pass_score: parseInt(document.getElementById('exam-pass').value) || 450,
-      answer_key: answerKey,
-      mp3_url: mp3Url,
-      pdf_url: pdfUrl
+    var cntL = parseInt(document.getElementById('cnt-l').value)||100;
+    var db = await sbClient.from('exams').insert({
+      title:title, description:document.getElementById('exam-desc').value.trim(),
+      duration_l:parseInt(document.getElementById('dur-l').value)||45,
+      duration_r:parseInt(document.getElementById('dur-r').value)||75,
+      count_l:cntL, pass_score:parseInt(document.getElementById('exam-pass').value)||450,
+      answer_key:ansKey, mp3_url:mp3, pdf_l_url:pdfL, pdf_r_url:pdfR
     });
-
-    btn.disabled = false; btn.textContent = '🚀 Xuất bản đề';
-    if(dbRes.error) { res.innerHTML = '<div class="notice error">❌ Lỗi: ' + dbRes.error.message + '</div>'; return; }
-    res.innerHTML = '<div class="notice success">✅ Đã xuất bản thành công! Học viên có thể làm bài ngay.</div>';
+    btn.disabled=false; btn.textContent='🚀 Xuất bản đề';
+    if(db.error){res.innerHTML='<div class="notice error">❌ '+db.error.message+'</div>';return;}
+    res.innerHTML='<div class="notice success">✅ Xuất bản thành công! Học viên có thể làm bài ngay.</div>';
     loadExams(); loadExamOptions();
-  } catch(e) {
-    btn.disabled = false; btn.textContent = '🚀 Xuất bản đề';
-    res.innerHTML = '<div class="notice error">❌ Lỗi: ' + e.message + '</div>';
+  } catch(e){
+    btn.disabled=false; btn.textContent='🚀 Xuất bản đề';
+    res.innerHTML='<div class="notice error">❌ '+e.message+'</div>';
   }
 }
 
-function loadExams() {
+function loadExams(){
   if(!sbClient) return;
-  sbClient.from('exams').select('id,title,description,duration_l,duration_r,pass_score,mp3_url,pdf_url,created_at').order('created_at',{ascending:false}).then(function(res) {
-    var el = document.getElementById('exams-table');
-    if(!res.data || !res.data.length) { el.innerHTML = '<div class="empty"><p>Chưa có đề thi nào.</p></div>'; return; }
-    var html = '<table><thead><tr><th>Tên đề</th><th>File</th><th>Điểm đạt</th><th>Ngày tạo</th><th></th></tr></thead><tbody>';
-    res.data.forEach(function(e) {
-      html += '<tr><td><strong>' + e.title + '</strong><br><span style="font-size:12px;color:var(--text-muted)">' + (e.description||'') + '</span></td><td style="font-size:12px">' + (e.mp3_url?'🎵 MP3 ':'') + (e.pdf_url?'📋 PDF':'') + '</td><td>' + e.pass_score + '</td><td>' + new Date(e.created_at).toLocaleDateString('vi-VN') + '</td><td><button class="btn btn-danger btn-sm" onclick="deleteExam(\'' + e.id + '\',\'' + (e.mp3_url||'') + '\',\'' + (e.pdf_url||'') + '\')">🗑</button></td></tr>';
+  sbClient.from('exams').select('id,title,description,pass_score,mp3_url,pdf_l_url,pdf_r_url,created_at').order('created_at',{ascending:false}).then(function(r){
+    var el=document.getElementById('exams-table');
+    if(!r.data||!r.data.length){el.innerHTML='<div class="empty"><p>Chưa có đề thi nào.</p></div>';return;}
+    var h='<table><thead><tr><th>Tên đề</th><th>File</th><th>Điểm đạt</th><th>Ngày</th><th></th></tr></thead><tbody>';
+    r.data.forEach(function(e){
+      var files_info = (e.mp3_url?'🎵 ':'')+(e.pdf_l_url?'📋L ':'')+(e.pdf_r_url?'📋R':'');
+      h+='<tr><td><strong>'+e.title+'</strong><br><span style="font-size:12px;color:var(--text-muted)">'+(e.description||'')+'</span></td><td style="font-size:12px">'+files_info+'</td><td>'+e.pass_score+'</td><td>'+new Date(e.created_at).toLocaleDateString('vi-VN')+'</td><td><button class="btn btn-danger btn-sm" onclick="deleteExam(\''+e.id+'\')">🗑</button></td></tr>';
     });
-    html += '</tbody></table>';
-    el.innerHTML = html;
+    el.innerHTML=h+'</tbody></table>';
   });
 }
 
-function deleteExam(id, mp3Url, pdfUrl) {
+function deleteExam(id){
   if(!confirm('Xóa đề này?')) return;
-  sbClient.from('submissions').delete().eq('exam_id',id).then(function() {
-    sbClient.from('exams').delete().eq('id',id).then(function() { loadExams(); loadExamOptions(); });
+  sbClient.from('submissions').delete().eq('exam_id',id).then(function(){
+    sbClient.from('exams').delete().eq('id',id).then(function(){loadExams();loadExamOptions();});
   });
 }
 
-function loadExamOptions() {
+function loadExamOptions(){
   if(!sbClient) return;
-  sbClient.from('exams').select('id,title').order('created_at',{ascending:false}).then(function(res) {
-    var sel = document.getElementById('sv-exam-select');
-    var fsel = document.getElementById('filter-exam');
-    if(!res.data || !res.data.length) { sel.innerHTML = '<option value="">Chưa có đề thi</option>'; return; }
-    sel.innerHTML = '<option value="">-- Chọn đề thi --</option>' + res.data.map(function(e){ return '<option value="' + e.id + '">' + e.title + '</option>'; }).join('');
-    fsel.innerHTML = '<option value="">Tất cả đề thi</option>' + res.data.map(function(e){ return '<option value="' + e.id + '">' + e.title + '</option>'; }).join('');
+  sbClient.from('exams').select('id,title').order('created_at',{ascending:false}).then(function(r){
+    var s=document.getElementById('sv-exam-select'), fs=document.getElementById('filter-exam');
+    if(!r.data||!r.data.length){s.innerHTML='<option value="">Chưa có đề thi</option>';return;}
+    var opts='<option value="">-- Chọn đề thi --</option>'+r.data.map(function(e){return'<option value="'+e.id+'">'+e.title+'</option>';}).join('');
+    s.innerHTML=opts;
+    fs.innerHTML='<option value="">Tất cả</option>'+r.data.map(function(e){return'<option value="'+e.id+'">'+e.title+'</option>';}).join('');
   });
 }
 
-function startExam() {
-  if(!sbClient) { alert('Hệ thống chưa kết nối.'); return; }
-  var name = document.getElementById('sv-name').value.trim();
-  var examId = document.getElementById('sv-exam-select').value;
-  if(!name) { alert('Vui lòng nhập họ tên.'); return; }
-  if(!examId) { alert('Vui lòng chọn đề thi.'); return; }
-  sbClient.from('exams').select('*').eq('id',examId).single().then(function(res) {
-    if(res.error || !res.data) { alert('Không tải được đề thi.'); return; }
-    currentExam = res.data;
-    activeExamId = examId;
-    svAnswers = {};
-    document.getElementById('sv-select').style.display = 'none';
-    document.getElementById('sv-doing').style.display = 'block';
-    document.getElementById('doing-title').textContent = res.data.title;
-    document.getElementById('doing-sname').textContent = name + (document.getElementById('sv-id').value ? ' · ' + document.getElementById('sv-id').value : '');
+function startExam(){
+  if(!sbClient){alert('Hệ thống chưa kết nối.');return;}
+  var name=document.getElementById('sv-name').value.trim(), examId=document.getElementById('sv-exam-select').value;
+  if(!name){alert('Nhập họ tên.');return;}
+  if(!examId){alert('Chọn đề thi.');return;}
+  sbClient.from('exams').select('*').eq('id',examId).single().then(function(r){
+    if(r.error||!r.data){alert('Không tải được đề.');return;}
+    currentExam=r.data; activeExamId=examId; svAnswers={};
+    document.getElementById('sv-select').style.display='none';
+    document.getElementById('sv-doing').style.display='block';
+    document.getElementById('doing-title').textContent=r.data.title;
+    document.getElementById('doing-sname').textContent=name+(document.getElementById('sv-id').value?' · '+document.getElementById('sv-id').value:'');
 
-    var cntL = res.data.count_l || 100;
-    var cntR = 200 - cntL;
-    document.getElementById('l-count').textContent = cntL;
-    document.getElementById('r-count').textContent = cntR;
+    var cntL=r.data.count_l||100, cntR=200-cntL;
+    document.getElementById('l-total').textContent=cntL;
+    document.getElementById('r-total').textContent=cntR;
 
     // Load audio
-    if(res.data.mp3_url) {
-      var audio = document.getElementById('audio-player');
-      document.getElementById('audio-src').src = res.data.mp3_url;
-      audio.load();
+    if(r.data.mp3_url){
+      document.getElementById('audio-src').src=r.data.mp3_url;
+      document.getElementById('audio-player').load();
     }
 
-    // Load PDF
-    if(res.data.pdf_url) {
-      document.getElementById('pdf-frame').src = res.data.pdf_url;
-      document.getElementById('pdf-frame').style.display = 'block';
-      document.getElementById('pdf-placeholder').style.display = 'none';
+    // Load PDF Listening
+    if(r.data.pdf_l_url){
+      document.getElementById('pdf-l-frame').src=r.data.pdf_l_url;
+      document.getElementById('pdf-l-frame').style.display='block';
+      document.getElementById('pdf-l-placeholder').style.display='none';
+    } else {
+      document.getElementById('pdf-l-wrap').classList.add('hidden');
     }
 
-    renderAnswerCells(cntL, cntR);
-    startTimer((res.data.duration_l + res.data.duration_r) * 60);
+    // Load PDF Reading
+    if(r.data.pdf_r_url){
+      document.getElementById('pdf-r-frame').src=r.data.pdf_r_url;
+      document.getElementById('pdf-r-frame').style.display='block';
+      document.getElementById('pdf-r-placeholder').style.display='none';
+    } else {
+      document.getElementById('pdf-r-wrap').classList.add('hidden');
+      document.getElementById('btn-toggle-pdf-r').style.display='none';
+    }
+
+    renderAnswers(cntL, cntR);
+    startTimer((r.data.duration_l+r.data.duration_r)*60);
   });
 }
 
-function renderAnswerCells(cntL, cntR) {
-  var lPanel = document.getElementById('panel-listening');
-  var rPanel = document.getElementById('panel-reading');
-  lPanel.innerHTML = '';
-  rPanel.innerHTML = '';
+function renderAnswers(cntL, cntR){
+  var lp=document.getElementById('panel-listening'), rp=document.getElementById('panel-reading');
+  lp.innerHTML=''; rp.innerHTML='';
+  for(var i=1;i<=cntL;i++) lp.innerHTML+=qBlock(i);
+  for(var j=cntL+1;j<=cntL+cntR;j++) rp.innerHTML+=qBlock(j);
+  updateProg(cntL+cntR);
+}
 
-  for(var i = 1; i <= cntL; i++) {
-    lPanel.innerHTML += makeQBlock(i, i);
+function qBlock(n){
+  return '<div class="q-block" id="qb-'+n+'"><div class="q-header"><div class="q-num">'+n+'</div></div><div class="q-opts">'+
+    ['A','B','C','D'].map(function(o){return'<div class="q-opt" id="opt-'+n+'-'+o+'" onclick="selOpt('+n+',\''+o+'\')"><div class="opt-dot">'+o+'</div></div>';}).join('')+
+  '</div></div>';
+}
+
+function selOpt(n, opt){
+  svAnswers[n]=opt;
+  ['A','B','C','D'].forEach(function(o){var el=document.getElementById('opt-'+n+'-'+o);if(el)el.className='q-opt'+(o===opt?' selected':'');});
+  var cntL=currentExam?currentExam.count_l||100:100;
+  updateProg(200);
+  // update per-col counter
+  var lDone=0,rDone=0;
+  for(var k in svAnswers){ if(parseInt(k)<=cntL) lDone++; else rDone++; }
+  document.getElementById('l-prog').innerHTML=lDone+'/<span id="l-total">'+cntL+'</span>';
+  document.getElementById('r-prog').innerHTML=rDone+'/<span id="r-total">'+(200-cntL)+'</span>';
+}
+
+function updateProg(total){
+  var done=Object.keys(svAnswers).length;
+  document.getElementById('progress-fill').style.width=(done/total*100)+'%';
+  document.getElementById('progress-info').textContent=done+'/'+total;
+}
+
+function togglePDF(side){
+  if(side==='r'){
+    pdfRVisible=!pdfRVisible;
+    document.getElementById('pdf-r-wrap').classList.toggle('hidden',!pdfRVisible);
+    document.getElementById('btn-toggle-pdf-r').textContent=pdfRVisible?'Ẩn đề':'Hiện đề';
   }
-  for(var j = cntL+1; j <= cntL+cntR; j++) {
-    rPanel.innerHTML += makeQBlock(j, j);
-  }
-  updateProgress(cntL + cntR);
 }
 
-function makeQBlock(qNum, idx) {
-  return '<div class="q-block" id="qb-' + idx + '"><div class="q-header"><div class="q-num">' + qNum + '</div><div class="q-text" style="color:var(--text-muted);font-size:12px">Câu ' + qNum + '</div></div><div class="q-opts">' +
-    ['A','B','C','D'].map(function(o){ return '<div class="q-opt" id="opt-' + idx + '-' + o + '" onclick="selOpt(' + idx + ',\'' + o + '\')"><div class="opt-dot">' + o + '</div></div>'; }).join('') +
-    '</div></div>';
-}
-
-function selOpt(idx, opt) {
-  svAnswers[idx] = opt;
-  ['A','B','C','D'].forEach(function(o) {
-    var el = document.getElementById('opt-' + idx + '-' + o);
-    if(el) el.className = 'q-opt' + (o === opt ? ' selected' : '');
-  });
-  updateProgress(currentExam ? (currentExam.count_l || 100) + (200 - (currentExam.count_l || 100)) : 200);
-}
-
-function updateProgress(total) {
-  if(!total) total = 200;
-  var done = Object.keys(svAnswers).length;
-  document.getElementById('progress-fill').style.width = (done/total*100) + '%';
-  document.getElementById('progress-info').textContent = done + '/' + total;
-}
-
-function togglePDF() {
-  pdfVisible = !pdfVisible;
-  var pdfEl = document.getElementById('pdf-viewer');
-  pdfEl.style.display = pdfVisible ? 'flex' : 'none';
-}
-
-function startTimer(seconds) {
-  timeLeft = seconds;
-  clearInterval(timerInt);
-  timerInt = setInterval(function() {
+function startTimer(s){
+  timeLeft=s; clearInterval(timerInt);
+  timerInt=setInterval(function(){
     timeLeft--;
-    var m = Math.floor(timeLeft/60), s = timeLeft % 60;
-    var box = document.getElementById('timer-box');
-    if(box) box.textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
-    if(box && timeLeft <= 300) box.style.color = 'var(--red)';
-    if(timeLeft <= 0) { clearInterval(timerInt); confirmSubmit(); }
-  }, 1000);
+    var m=Math.floor(timeLeft/60),sec=timeLeft%60;
+    var b=document.getElementById('timer-box');
+    if(b) b.textContent=String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0');
+    if(b&&timeLeft<=300) b.style.color='var(--red)';
+    if(timeLeft<=0){clearInterval(timerInt);confirmSubmit();}
+  },1000);
 }
 
-function submitExam() {
-  var cntL = currentExam ? (currentExam.count_l || 100) : 100;
-  var total = cntL + (200 - cntL);
-  var unanswered = total - Object.keys(svAnswers).length;
-  document.getElementById('confirm-msg').textContent = unanswered > 0 ? 'Còn ' + unanswered + ' câu chưa trả lời. Vẫn muốn nộp?' : 'Bạn đã trả lời tất cả. Xác nhận nộp?';
+function submitExam(){
+  var total=200, unanswered=total-Object.keys(svAnswers).length;
+  document.getElementById('confirm-msg').textContent=unanswered>0?'Còn '+unanswered+' câu chưa trả lời. Vẫn muốn nộp?':'Bạn đã trả lời tất cả. Xác nhận nộp?';
   document.getElementById('modal-confirm').classList.add('open');
 }
 
-function confirmSubmit() {
-  closeModal('modal-confirm');
-  clearInterval(timerInt);
-  var cntL = currentExam ? (currentExam.count_l || 100) : 100;
-  var cntR = 200 - cntL;
-  var key = currentExam.answer_key || {};
-  var lC=0, rC=0;
-
-  for(var i=1; i<=cntL; i++) { if(svAnswers[i] && key[i] && svAnswers[i] === key[i]) lC++; }
-  for(var j=cntL+1; j<=200; j++) { if(svAnswers[j] && key[j] && svAnswers[j] === key[j]) rC++; }
-
-  var lS = cntL ? Math.round(lC/cntL*495) : 0;
-  var rS = cntR ? Math.round(rC/cntR*495) : 0;
-  var tot = lS + rS;
-  var passed = tot >= (currentExam.pass_score || 450);
-
-  if(sbClient) {
-    sbClient.from('submissions').insert({
-      exam_id: activeExamId,
-      student_name: document.getElementById('sv-name').value.trim(),
-      student_email: document.getElementById('sv-email').value.trim(),
-      student_code: document.getElementById('sv-id').value.trim(),
-      answers: svAnswers,
-      score_listening: lS, score_reading: rS, score_total: tot, passed: passed
-    });
-  }
-  showResult(lS, rS, tot, passed, lC, rC, cntL, cntR);
+function confirmSubmit(){
+  closeModal('modal-confirm'); clearInterval(timerInt);
+  var cntL=currentExam?currentExam.count_l||100:100, cntR=200-cntL;
+  var key=currentExam.answer_key||{}, lC=0, rC=0;
+  for(var i=1;i<=cntL;i++){if(svAnswers[i]&&key[i]&&svAnswers[i]===key[i])lC++;}
+  for(var j=cntL+1;j<=200;j++){if(svAnswers[j]&&key[j]&&svAnswers[j]===key[j])rC++;}
+  var lS=cntL?Math.round(lC/cntL*495):0, rS=cntR?Math.round(rC/cntR*495):0, tot=lS+rS;
+  var passed=tot>=(currentExam.pass_score||450);
+  if(sbClient) sbClient.from('submissions').insert({exam_id:activeExamId,student_name:document.getElementById('sv-name').value.trim(),student_email:document.getElementById('sv-email').value.trim(),student_code:document.getElementById('sv-id').value.trim(),answers:svAnswers,score_listening:lS,score_reading:rS,score_total:tot,passed:passed});
+  showResult(lS,rS,tot,passed,lC,rC,cntL,cntR);
 }
 
-function showResult(lS, rS, tot, passed, lC, rC, cntL, cntR) {
-  document.getElementById('sv-doing').style.display = 'none';
-  document.getElementById('sv-result').style.display = 'block';
-  document.getElementById('result-sub').textContent = document.getElementById('sv-name').value + ' · ' + currentExam.title + ' · ' + new Date().toLocaleString('vi-VN');
-  document.getElementById('score-panel').innerHTML =
-    '<div class="score-box"><div class="val blue">' + lS + '</div><div class="lbl">Listening (/495)</div></div>' +
-    '<div class="score-box"><div class="val green">' + rS + '</div><div class="lbl">Reading (/495)</div></div>' +
-    '<div class="score-box"><div class="val">' + tot + '</div><div class="lbl">Tổng điểm</div><div style="margin-top:8px"><span class="bp ' + (passed?'bp-pass':'bp-fail') + '">' + (passed?'✓ Đạt':'✗ Chưa đạt') + '</span></div></div>';
-
-  var key = currentExam.answer_key || {};
-  var det = '<div style="display:flex;gap:16px;font-size:13px;margin-bottom:16px">Listening đúng: <strong>' + lC + '/' + cntL + '</strong>&nbsp;&nbsp;Reading đúng: <strong>' + rC + '/' + cntR + '</strong></div><p class="slabel">Chi tiết từng câu</p><div style="max-height:400px;overflow-y:auto">';
-  for(var i=1; i<=200; i++) {
-    var ua = svAnswers[i]; var ka = key[i]; var ok = ua && ka && ua === ka;
-    var color = ok ? 'var(--green)' : (ua ? 'var(--red)' : 'var(--text-muted)');
-    det += '<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:0.5px solid var(--border);font-size:13px"><span>Câu ' + i + '</span><span style="color:' + color + ';font-weight:500">Bạn: ' + (ua||'—') + ((!ok && ka) ? ' &nbsp;<span style="color:var(--text-muted)">✓'+ka+'</span>' : '') + '</span></div>';
+function showResult(lS,rS,tot,passed,lC,rC,cntL,cntR){
+  document.getElementById('sv-doing').style.display='none';
+  document.getElementById('sv-result').style.display='block';
+  document.getElementById('result-sub').textContent=document.getElementById('sv-name').value+' · '+currentExam.title+' · '+new Date().toLocaleString('vi-VN');
+  document.getElementById('score-panel').innerHTML='<div class="score-box"><div class="val blue">'+lS+'</div><div class="lbl">Listening (/495)</div></div><div class="score-box"><div class="val green">'+rS+'</div><div class="lbl">Reading (/495)</div></div><div class="score-box"><div class="val">'+tot+'</div><div class="lbl">Tổng điểm</div><div style="margin-top:8px"><span class="bp '+(passed?'bp-pass':'bp-fail')+'">'+(passed?'✓ Đạt':'✗ Chưa đạt')+'</span></div></div>';
+  var key=currentExam.answer_key||{}, det='<div style="display:flex;gap:20px;font-size:13px;margin-bottom:16px">Listening đúng: <strong>'+lC+'/'+cntL+'</strong> &nbsp; Reading đúng: <strong>'+rC+'/'+cntR+'</strong></div><p class="slabel">Chi tiết từng câu</p><div style="max-height:400px;overflow-y:auto">';
+  for(var i=1;i<=200;i++){
+    var ua=svAnswers[i],ka=key[i],ok=ua&&ka&&ua===ka;
+    var color=ok?'var(--green)':(ua?'var(--red)':'var(--text-muted)');
+    det+='<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:0.5px solid var(--border);font-size:13px"><span>Câu '+i+(i===cntL+1?'&nbsp;<span style="font-size:10px;background:var(--blue-light);color:var(--blue);padding:1px 6px;border-radius:10px">Reading</span>':'')+'</span><span style="color:'+color+';font-weight:500">'+( ua||'—')+(!ok&&ka?' <span style="color:var(--text-muted);font-weight:400">✓'+ka+'</span>':'')+'</span></div>';
   }
-  det += '</div>';
-  document.getElementById('result-detail').innerHTML = det;
+  det+='</div>';
+  document.getElementById('result-detail').innerHTML=det;
 }
 
-function retakeExam() { document.getElementById('sv-result').style.display='none'; startExam(); }
-function backToSelect() { document.getElementById('sv-result').style.display='none'; document.getElementById('sv-select').style.display='block'; }
+function retakeExam(){document.getElementById('sv-result').style.display='none';startExam();}
+function backToSelect(){document.getElementById('sv-result').style.display='none';document.getElementById('sv-select').style.display='block';}
 
-function loadResults() {
+function loadResults(){
   if(!sbClient) return;
-  var examId = document.getElementById('filter-exam').value;
-  var q = sbClient.from('submissions').select('*,exams(title)').order('submitted_at',{ascending:false});
-  if(examId) q = q.eq('exam_id', examId);
-  q.then(function(res) { allResults = res.data || []; renderTable(allResults); });
+  var examId=document.getElementById('filter-exam').value;
+  var q=sbClient.from('submissions').select('*,exams(title)').order('submitted_at',{ascending:false});
+  if(examId) q=q.eq('exam_id',examId);
+  q.then(function(r){allResults=r.data||[];renderTable(allResults);});
 }
 
-function filterTable() {
-  var kw = document.getElementById('filter-name').value.toLowerCase();
-  renderTable(allResults.filter(function(r){ return (r.student_name||'').toLowerCase().includes(kw); }));
+function filterTable(){
+  var kw=document.getElementById('filter-name').value.toLowerCase();
+  renderTable(allResults.filter(function(r){return(r.student_name||'').toLowerCase().includes(kw);}));
 }
 
-function renderTable(data) {
-  var el = document.getElementById('results-table');
-  if(!data.length) { el.innerHTML = '<div class="empty"><p>Không có kết quả.</p></div>'; return; }
-  var html = '<table><thead><tr><th>Học viên</th><th>Đề thi</th><th>L</th><th>R</th><th>Tổng</th><th>Kết quả</th><th>Nộp lúc</th></tr></thead><tbody>';
-  data.forEach(function(r) {
-    html += '<tr><td><strong>' + (r.student_name||'—') + '</strong><br><span style="font-size:11px;color:var(--text-muted)">' + (r.student_email||'') + ' ' + (r.student_code||'') + '</span></td><td style="font-size:12px">' + (r.exams&&r.exams.title||'—') + '</td><td>' + (r.score_listening||0) + '</td><td>' + (r.score_reading||0) + '</td><td><strong>' + (r.score_total||0) + '</strong></td><td><span class="bp ' + (r.passed?'bp-pass':'bp-fail') + '">' + (r.passed?'Đạt':'Chưa đạt') + '</span></td><td style="font-size:12px">' + new Date(r.submitted_at).toLocaleString('vi-VN') + '</td></tr>';
-  });
-  el.innerHTML = html + '</tbody></table>';
+function renderTable(data){
+  var el=document.getElementById('results-table');
+  if(!data.length){el.innerHTML='<div class="empty"><p>Không có kết quả.</p></div>';return;}
+  var h='<table><thead><tr><th>Học viên</th><th>Đề thi</th><th>L</th><th>R</th><th>Tổng</th><th>Kết quả</th><th>Nộp lúc</th></tr></thead><tbody>';
+  data.forEach(function(r){h+='<tr><td><strong>'+(r.student_name||'—')+'</strong><br><span style="font-size:11px;color:var(--text-muted)">'+(r.student_email||'')+' '+(r.student_code||'')+'</span></td><td style="font-size:12px">'+(r.exams&&r.exams.title||'—')+'</td><td>'+(r.score_listening||0)+'</td><td>'+(r.score_reading||0)+'</td><td><strong>'+(r.score_total||0)+'</strong></td><td><span class="bp '+(r.passed?'bp-pass':'bp-fail')+'">'+(r.passed?'Đạt':'Chưa đạt')+'</span></td><td style="font-size:12px">'+new Date(r.submitted_at).toLocaleString('vi-VN')+'</td></tr>';});
+  el.innerHTML=h+'</tbody></table>';
 }
 
-function exportCSV() {
-  if(!allResults.length) { alert('Không có dữ liệu.'); return; }
-  var rows = [['Họ tên','Email','Mã','Đề thi','Listening','Reading','Tổng','Kết quả','Thời gian']];
-  allResults.forEach(function(r) { rows.push([r.student_name,r.student_email,r.student_code,r.exams&&r.exams.title,r.score_listening,r.score_reading,r.score_total,r.passed?'Đạt':'Chưa đạt',new Date(r.submitted_at).toLocaleString('vi-VN')]); });
-  var csv = rows.map(function(r){ return r.map(function(c){ return '"'+(c||'').toString().replace(/"/g,'""')+'"'; }).join(','); }).join('\n');
-  var a = document.createElement('a'); a.href = 'data:text/csv;charset=utf-8,\uFEFF' + encodeURIComponent(csv); a.download = 'ket-qua-toeic.csv'; a.click();
+function exportCSV(){
+  if(!allResults.length){alert('Không có dữ liệu.');return;}
+  var rows=[['Họ tên','Email','Mã','Đề thi','Listening','Reading','Tổng','Kết quả','Thời gian']];
+  allResults.forEach(function(r){rows.push([r.student_name,r.student_email,r.student_code,r.exams&&r.exams.title,r.score_listening,r.score_reading,r.score_total,r.passed?'Đạt':'Chưa đạt',new Date(r.submitted_at).toLocaleString('vi-VN')]);});
+  var csv=rows.map(function(r){return r.map(function(c){return'"'+(c||'').toString().replace(/"/g,'""')+'"';}).join(',');}).join('\n');
+  var a=document.createElement('a');a.href='data:text/csv;charset=utf-8,\uFEFF'+encodeURIComponent(csv);a.download='ket-qua-toeic.csv';a.click();
 }
 
-function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+function closeModal(id){document.getElementById(id).classList.remove('open');}
 
 init();
 </script>

@@ -227,6 +227,22 @@ tr:hover td{background:var(--bg-surface)}
     </div>
   </div>
 
+  <!-- ANS PDF ZONES -->
+      <div class="frow" style="margin-top:16px">
+        <div>
+          <span class="slabel" style="margin-top:0">📝 PDF đáp án Listening</span>
+          <div class="upload-zone" id="zone-ans-l" onclick="document.getElementById('input-ans-l').click()" ondragover="drag(event,'zone-ans-l',true)" ondragleave="drag(event,'zone-ans-l',false)" ondrop="dropFile(event,'ans-l')"><div class="icon">📝</div><p><strong>PDF đáp án</strong> Listening</p><small>.pdf · học viên xem sau khi nộp</small><div class="file-done" id="ans-l-name" style="display:none"></div></div>
+          <input type="file" id="input-ans-l" accept=".pdf" style="display:none" onchange="handleFile(event,'ans-l')">
+        </div>
+        <div>
+          <span class="slabel" style="margin-top:0">📝 PDF đáp án Reading</span>
+          <div class="upload-zone" id="zone-ans-r" onclick="document.getElementById('input-ans-r').click()" ondragover="drag(event,'zone-ans-r',true)" ondragleave="drag(event,'zone-ans-r',false)" ondrop="dropFile(event,'ans-r')"><div class="icon">📝</div><p><strong>PDF đáp án</strong> Reading</p><small>.pdf · học viên xem sau khi nộp</small><div class="file-done" id="ans-r-name" style="display:none"></div></div>
+          <input type="file" id="input-ans-r" accept=".pdf" style="display:none" onchange="handleFile(event,'ans-r')">
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- BƯỚC 2: ĐÁP ÁN -->
   <div class="card">
     <h3>Bước 2 — Nhập đáp án chuẩn</h3>
@@ -426,14 +442,16 @@ tr:hover td{background:var(--bg-surface)}
 
 <script>
 var sbLib = null, sbClient = null;
-var files = {mp3:null,'pdf-l':null,'pdf-r':null,'pdf-shared':null};
+var files = {mp3:null,'pdf-l':null,'pdf-r':null,'pdf-shared':null,'ans-l':null,'ans-r':null};
 var ansKey = {};
 var currentExam = null, svAnswers = {}, timerInt = null, timeLeft = 0;
 var allResults = [], activeExamId = null;
 var pdfRVisible = true, pdfLVisible = true;
 var isSharedPDF = false;
 
-var SQL = "create table if not exists exams (\n  id uuid primary key default gen_random_uuid(),\n  title text not null,\n  description text,\n  duration_l int default 45,\n  duration_r int default 75,\n  count_l int default 100,\n  pass_score int default 450,\n  answer_key jsonb,\n  mp3_url text,\n  pdf_l_url text,\n  pdf_r_url text,\n  created_at timestamptz default now()\n);\n\ncreate table if not exists submissions (\n  id uuid primary key default gen_random_uuid(),\n  exam_id uuid references exams(id),\n  student_name text,\n  student_email text,\n  student_code text,\n  answers jsonb,\n  score_listening int,\n  score_reading int,\n  score_total int,\n  passed boolean,\n  submitted_at timestamptz default now()\n);\n\nalter table exams enable row level security;\nalter table submissions enable row level security;\ncreate policy \"r exams\" on exams for select using (true);\ncreate policy \"i exams\" on exams for insert with check (true);\ncreate policy \"r subs\" on submissions for select using (true);\ncreate policy \"i subs\" on submissions for insert with check (true);\n\ninsert into storage.buckets (id,name,public) values ('toeic-files','toeic-files',true) on conflict do nothing;\ncreate policy \"r files\" on storage.objects for select using (bucket_id='toeic-files');\ncreate policy \"i files\" on storage.objects for insert with check (bucket_id='toeic-files');";
+var SQL = "create table if not exists exams (\n  id uuid primary key default gen_random_uuid(),\n  title text not null,\n  description text,\n  duration_l int default 45,\n  duration_r int default 75,\n  count_l int default 100,\n  pass_score int default 450,\n  answer_key jsonb,\n  mp3_url text,\n  pdf_l_url text,\n  pdf_r_url text,
+  ans_l_url text,
+  ans_r_url text,\n  created_at timestamptz default now()\n);\n\ncreate table if not exists submissions (\n  id uuid primary key default gen_random_uuid(),\n  exam_id uuid references exams(id),\n  student_name text,\n  student_email text,\n  student_code text,\n  answers jsonb,\n  score_listening int,\n  score_reading int,\n  score_total int,\n  passed boolean,\n  submitted_at timestamptz default now()\n);\n\nalter table exams enable row level security;\nalter table submissions enable row level security;\ncreate policy \"r exams\" on exams for select using (true);\ncreate policy \"i exams\" on exams for insert with check (true);\ncreate policy \"r subs\" on submissions for select using (true);\ncreate policy \"i subs\" on submissions for insert with check (true);\n\ninsert into storage.buckets (id,name,public) values ('toeic-files','toeic-files',true) on conflict do nothing;\ncreate policy \"r files\" on storage.objects for select using (bucket_id='toeic-files');\ncreate policy \"i files\" on storage.objects for insert with check (bucket_id='toeic-files');";
 
 document.getElementById('sql-block').textContent = SQL;
 
@@ -551,12 +569,15 @@ async function publishExam() {
       if(files['pdf-r']){ res.innerHTML='<div class="notice info">⏳ Upload PDF Reading...</div>'; pdfR = await uploadFile(files['pdf-r'],'pdf/'+ts+'-r-'+files['pdf-r'].name); }
     }
     var cntL = parseInt(document.getElementById('cnt-l').value)||100;
+    var ansL='', ansR='';
+    if(files['ans-l']){ res.innerHTML='<div class="notice info">⏳ Upload PDF đáp án Listening...</div>'; ansL = await uploadFile(files['ans-l'],'pdf/'+ts+'-ansl-'+files['ans-l'].name); }
+    if(files['ans-r']){ res.innerHTML='<div class="notice info">⏳ Upload PDF đáp án Reading...</div>'; ansR = await uploadFile(files['ans-r'],'pdf/'+ts+'-ansr-'+files['ans-r'].name); }
     var db = await sbClient.from('exams').insert({
       title:title, description:document.getElementById('exam-desc').value.trim(),
       duration_l:parseInt(document.getElementById('dur-l').value)||45,
       duration_r:parseInt(document.getElementById('dur-r').value)||75,
       count_l:cntL, pass_score:parseInt(document.getElementById('exam-pass').value)||450,
-      answer_key:ansKey, mp3_url:mp3, pdf_l_url:pdfL, pdf_r_url:pdfR
+      answer_key:ansKey, mp3_url:mp3, pdf_l_url:pdfL, pdf_r_url:pdfR, ans_l_url:ansL, ans_r_url:ansR
     });
     btn.disabled=false; btn.textContent='🚀 Xuất bản đề';
     if(db.error){res.innerHTML='<div class="notice error">❌ '+db.error.message+'</div>';return;}
@@ -730,6 +751,12 @@ function showResult(lS,rS,tot,passed,lC,rC,cntL,cntR){
   }
   det+='</div>';
   document.getElementById('result-detail').innerHTML=det;
+  // Show answer PDF buttons
+  var btnHtml = '<div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap">';
+  if(currentExam.ans_l_url) btnHtml += '<a href="'+currentExam.ans_l_url+'" target="_blank" class="btn btn-outline">📝 Xem đáp án Listening</a>';
+  if(currentExam.ans_r_url) btnHtml += '<a href="'+currentExam.ans_r_url+'" target="_blank" class="btn btn-outline">📝 Xem đáp án Reading</a>';
+  btnHtml += '</div>';
+  document.getElementById('result-detail').innerHTML += btnHtml;
 }
 
 function retakeExam(){document.getElementById('sv-result').style.display='none';startExam();}
